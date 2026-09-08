@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import RatingBadge from "./RatingBadge";
 import type { Movie } from "../../types/tmdb";
 
 interface MovieCardProps {
@@ -31,11 +31,7 @@ function MovieCard({ movie }: MovieCardProps) {
             <span className="text-sm text-zinc-500">No poster available</span>
           </div>
         )}
-        <div className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/75 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-          <Star size={13} fill="currentColor" className="text-yellow-400" />
-
-          <span>{movie.vote_average.toFixed(1)}</span>
-        </div>
+        <RatingBadge rating={movie.vote_average} />
 
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
