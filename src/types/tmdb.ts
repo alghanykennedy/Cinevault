@@ -91,3 +91,16 @@ export interface MovieDetails extends Movie {
   credits?: MovieCredits;
   similar?: TMDBResponse<Movie>;
 }
+
+export interface TVDetails extends TVShow {
+  genres: MovieGenre[];
+  homepage: string | null;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  episode_run_time: number[];
+  status: string;
+  tagline: string | null;
+  videos?: MovieVideos;
+  credits?: MovieCredits;
+  similar?: TMDBResponse<TVShow>;
+}

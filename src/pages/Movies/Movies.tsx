@@ -128,7 +128,6 @@ const Movies = () => {
           <p className="mt-2 text-zinc-400">Discover movies worth watching.</p>
         </div>
 
-        {/* Category */}
         <div className="mb-10 flex gap-2 overflow-x-auto">
           {[
             ["popular", "Popular"],

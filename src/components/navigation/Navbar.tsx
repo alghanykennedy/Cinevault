@@ -1,9 +1,19 @@
 import { useState, useEffect } from "react";
-import { Search, User, Home as HomeIcon, Film, Tv, ChevronDown } from "lucide-react";
+import {
+  Search,
+  User,
+  Home as HomeIcon,
+  Film,
+  Tv,
+  ChevronDown,
+  Menu,
+  X,
+} from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -42,7 +52,7 @@ const Navbar = () => {
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-[#08090B]/90 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/40"
-          : "bg-gradient-to-b from-[#08090B]/85 via-[#08090B]/40 to-transparent"
+          : "bg-linear-to-b from-[#08090B]/85 via-[#08090B]/40 to-transparent"
       }`}>
       <nav
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
@@ -71,21 +81,14 @@ const Navbar = () => {
                     ? "bg-[#E50914]/25 text-white border border-[#E50914]/40 shadow-sm"
                     : "text-zinc-300 hover:text-white hover:bg-white/10"
                 }`}>
-                <Icon size={16} className={isActive ? "text-[#E50914]" : "text-zinc-400"} />
+                <Icon
+                  size={16}
+                  className={isActive ? "text-[#E50914]" : "text-zinc-400"}
+                />
                 {item.label}
               </NavLink>
             );
           })}
-
-          {/* More Dropdown Button */}
-          <div className="relative group">
-            <button
-              type="button"
-              className="text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-1 transition">
-              <span>More</span>
-              <ChevronDown size={14} className="text-zinc-400 group-hover:rotate-180 transition-transform duration-200" />
-            </button>
-          </div>
         </div>
 
         {/* Right Section: Search & Account */}
@@ -99,6 +102,19 @@ const Navbar = () => {
 
           <button
             type="button"
+            aria-label={
+              isMobileMenuOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+            }
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="rounded-full p-2 text-zinc-300 transition hover:bg-white/10 hover:text-white md:hidden">
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
+          <button
+            type="button"
             aria-label="Open profile"
             className="flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20 border border-white/10">
             <User size={16} className="text-zinc-300" />
@@ -107,6 +123,37 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
+
+      {isMobileMenuOpen && (
+        <div className="border-t border-white/10 bg-(--color-background)/95 px-4 py-3 backdrop-blur-xl md:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition ${
+                    isActive
+                      ? "bg-(--color-accent)/20 text-white"
+                      : "text-zinc-300 hover:bg-white/10 hover:text-white"
+                  }`}>
+                  <Icon
+                    size={18}
+                    className={
+                      isActive ? "text-(--color-accent)" : "text-zinc-400"
+                    }
+                  />
+                  {item.label}
+                </NavLink>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </header>
   );
 };
