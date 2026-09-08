@@ -1,39 +1,84 @@
 import { useEffect, useState } from "react";
 
 import Hero from "../../components/common/Hero";
-import { getPopularMovies } from "../../services/tmdb/movie";
-import type { Movie } from "../../types/tmdb";
+import MediaRow from "../../components/media/MediaRow";
 
-import MovieRow from "../../components/movie/MovieRow";
+import {
+  getPopularMovies,
+  getTopRatedMovies,
+  getTrendingMovies,
+} from "../../services/tmdb/movie";
+
+import { getPopularTVShows } from "../../services/tmdb/tv";
+
+import type { Movie, TVShow } from "../../types/tmdb";
 
 const Home = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
+  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
+  const [popularTVShows, setPopularTVShows] = useState<TVShow[]>([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadMovies = async () => {
+    const loadHomeData = async () => {
       try {
-        const response = await getPopularMovies();
+        const [
+          trendingResponse,
+          popularResponse,
+          topRatedResponse,
+          tvResponse,
+        ] = await Promise.all([
+          getTrendingMovies(),
+          getPopularMovies(),
+          getTopRatedMovies(),
+          getPopularTVShows(),
+        ]);
 
-        setMovies(response.results);
+        setTrendingMovies(trendingResponse.results);
+        setPopularMovies(popularResponse.results);
+        setTopRatedMovies(topRatedResponse.results);
+        setPopularTVShows(tvResponse.results);
       } catch (error) {
-        console.error("TMDB API Error:", error);
+        console.error("Failed to load home data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadMovies();
+    loadHomeData();
   }, []);
 
   return (
     <>
       <Hero />
 
-      <MovieRow
+      <MediaRow
         title="Trending Now"
-        description="Discover what's popular right now."
-        movies={movies.slice(0, 12)}
+        description="Discover what's trending this week."
+        media={trendingMovies.slice(0, 10)}
+        loading={loading}
+      />
+
+      <MediaRow
+        title="Popular Movies"
+        description="The movies everyone is watching."
+        media={popularMovies.slice(0, 10)}
+        loading={loading}
+      />
+
+      <MediaRow
+        title="Top Rated"
+        description="Highly rated movies worth watching."
+        media={topRatedMovies.slice(0, 10)}
+        loading={loading}
+      />
+
+      <MediaRow
+        title="Popular TV Shows"
+        description="Popular shows you don't want to miss."
+        media={popularTVShows.slice(0, 10)}
         loading={loading}
       />
     </>

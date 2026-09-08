@@ -1,6 +1,15 @@
 import tmdbClient from "./client";
 import type { Movie, TMDBResponse } from "../../types/tmdb";
 
+export const getTrendingMovies = async (): Promise<TMDBResponse<Movie>> => {
+  const response = await tmdbClient.get<TMDBResponse<Movie>>(
+    "/trending/movie/week"
+  );
+
+  return response.data;
+};
+
+
 export const getPopularMovies = async (): Promise<TMDBResponse<Movie>> => {
   const response = await tmdbClient.get<TMDBResponse<Movie>>(
     "/movie/popular"
