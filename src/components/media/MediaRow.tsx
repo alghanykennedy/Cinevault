@@ -9,6 +9,7 @@ interface MediaRowProps {
   description?: string;
   media: Media[];
   loading?: boolean;
+  error?: string | null;
 }
 
 const MediaRow = ({
@@ -16,6 +17,7 @@ const MediaRow = ({
   description,
   media,
   loading = false,
+  error = null,
 }: MediaRowProps) => {
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -25,9 +27,19 @@ const MediaRow = ({
         {description && <p className="mt-2 text-zinc-400">{description}</p>}
       </div>
 
-      {loading ? (
+      {error ? (
+        <div className="rounded-xl border border-white/10 bg-zinc-900/60 px-5 py-6">
+          <p className="text-sm text-zinc-400">{error}</p>
+        </div>
+      ) : loading ? (
         <div className="flex gap-4 overflow-hidden">
           <LoadingSkeleton count={6} variant="row" />
+        </div>
+      ) : media.length === 0 ? (
+        <div className="rounded-xl border border-white/10 bg-zinc-900/60 px-5 py-6">
+          <p className="text-sm text-zinc-400">
+            No content available right now.
+          </p>
         </div>
       ) : (
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">

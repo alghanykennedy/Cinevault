@@ -1,13 +1,12 @@
 import RatingBadge from "../movie/RatingBadge";
 import type { Movie, TVShow } from "../../types/tmdb";
+import { getTMDBImageUrl } from "../../utils/images";
 
 type Media = Movie | TVShow;
 
 interface MediaCardProps {
   media: Media;
 }
-
-const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const isMovie = (media: Media): media is Movie => {
   return "title" in media;
@@ -20,9 +19,7 @@ const MediaCard = ({ media }: MediaCardProps) => {
 
   const releaseYear = date ? new Date(date).getFullYear() : null;
 
-  const posterUrl = media.poster_path
-    ? `${TMDB_IMAGE_BASE_URL}${media.poster_path}`
-    : null;
+  const posterUrl = getTMDBImageUrl(media.poster_path, "w500");
 
   return (
     <article className="group w-full min-w-0">
