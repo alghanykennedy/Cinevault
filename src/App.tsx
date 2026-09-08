@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import Home from "./pages/Home/Home";
 import Movies from "./pages/Movies/Movies";
+import Search from "./pages/Search/Search";
+import MovieDetail from "./pages/MovieDetail/MovieDetail";
 
 const TVShows = () => {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:id" element={<MovieDetail />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/tv-shows" element={<TVShows />} />
         </Route>
       </Routes>

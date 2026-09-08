@@ -45,12 +45,12 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <NavLink
+            to="/search"
             aria-label="Search movies and TV shows"
             className="rounded-full p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white">
             <Search size={20} />
-          </button>
+          </NavLink>
 
           <button
             type="button"
