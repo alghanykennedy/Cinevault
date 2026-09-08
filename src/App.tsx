@@ -1,25 +1,34 @@
-import { useEffect } from "react";
-import { getPopularMovies } from "./services/tmdb/movie";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainLayout from "./components/layout/MainLayout";
+import Home from "./pages/Home/Home";
+
+const Movies = () => {
+  return (
+    <section className="min-h-screen p-10">
+      <h1 className="text-3xl font-bold">Movies</h1>
+    </section>
+  );
+};
+
+const TVShows = () => {
+  return (
+    <section className="min-h-screen p-10">
+      <h1 className="text-3xl font-bold">TV Shows</h1>
+    </section>
+  );
+};
 
 function App() {
-  useEffect(() => {
-    const testApi = async () => {
-      try {
-        const response = await getPopularMovies();
-
-        console.log(response);
-      } catch (error) {
-        console.error("TMDB API Error:", error);
-      }
-    };
-
-    testApi();
-  }, []);
-
   return (
-    <main className="min-h-screen bg-[#08090b] text-white">
-      <h1 className="p-10 text-3xl font-bold">CineVault</h1>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/tv-shows" element={<TVShows />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
