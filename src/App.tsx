@@ -4,14 +4,7 @@ import Home from "./pages/Home/Home";
 import Movies from "./pages/Movies/Movies";
 import Search from "./pages/Search/Search";
 import MovieDetail from "./pages/MovieDetail/MovieDetail";
-
-const TVShows = () => {
-  return (
-    <section className="min-h-screen p-10">
-      <h1 className="text-3xl font-bold">TV Shows</h1>
-    </section>
-  );
-};
+import TV from "./pages/TV/Tv";
 
 function App() {
   return (
@@ -22,7 +15,8 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/movies/:id" element={<MovieDetail />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/tv-shows" element={<TVShows />} />
+          <Route path="/tv-shows" element={<TV />} />
+          <Route path="/tv-shows/:id" element={<TV />} />
         </Route>
       </Routes>
     </BrowserRouter>

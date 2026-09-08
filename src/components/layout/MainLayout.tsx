@@ -3,7 +3,7 @@ import Navbar from "../navigation/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen bg-[#08090B] text-white">
+    <div className="min-h-screen bg-(--color-background) text-(--color-text-primary)">
       <Navbar />
 
       <main>

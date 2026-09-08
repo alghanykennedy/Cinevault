@@ -1,4 +1,5 @@
 import type { Movie, TVShow } from "../../types/tmdb";
+import FeedbackPanel from "../common/FeedbackPanel";
 import LoadingSkeleton from "../movie/LoadingSkeleton";
 import MediaCard from "./MediaCard";
 
@@ -28,19 +29,13 @@ const MediaRow = ({
       </div>
 
       {error ? (
-        <div className="rounded-xl border border-white/10 bg-zinc-900/60 px-5 py-6">
-          <p className="text-sm text-zinc-400">{error}</p>
-        </div>
+        <FeedbackPanel message={error} />
       ) : loading ? (
         <div className="flex gap-4 overflow-hidden">
           <LoadingSkeleton count={6} variant="row" />
         </div>
       ) : media.length === 0 ? (
-        <div className="rounded-xl border border-white/10 bg-zinc-900/60 px-5 py-6">
-          <p className="text-sm text-zinc-400">
-            No content available right now.
-          </p>
-        </div>
+        <FeedbackPanel message="No content available right now." />
       ) : (
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
           {media.map((item) => (

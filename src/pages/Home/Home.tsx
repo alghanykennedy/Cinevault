@@ -4,6 +4,7 @@ import Hero from "../../components/common/Hero";
 import MediaRow from "../../components/media/MediaRow";
 
 import {
+  getNowPlayingMovies,
   getPopularMovies,
   getTopRatedMovies,
   getTrendingMovies,
@@ -27,6 +28,9 @@ const initialTVState: SectionState<TVShow> = {
 };
 
 const Home = () => {
+  const [nowPlaying, setNowPlaying] =
+    useState<SectionState<Movie>>(initialMovieState);
+
   const [trending, setTrending] =
     useState<SectionState<Movie>>(initialMovieState);
 
@@ -40,6 +44,26 @@ const Home = () => {
     useState<SectionState<TVShow>>(initialTVState);
 
   useEffect(() => {
+    const loadNowPlaying = async () => {
+      try {
+        const response = await getNowPlayingMovies();
+
+        setNowPlaying({
+          data: response.results,
+          loading: false,
+          error: null,
+        });
+      } catch (error) {
+        console.error("Failed to load now playing movies:", error);
+
+        setNowPlaying({
+          data: [],
+          loading: false,
+          error: "Unable to load now playing movies.",
+        });
+      }
+    };
+
     const loadTrending = async () => {
       try {
         const response = await getTrendingMovies();
@@ -120,6 +144,7 @@ const Home = () => {
       }
     };
 
+    loadNowPlaying();
     loadTrending();
     loadPopular();
     loadTopRated();
@@ -128,7 +153,11 @@ const Home = () => {
 
   return (
     <>
-      <Hero />
+      <Hero
+        movies={nowPlaying.data}
+        loading={nowPlaying.loading}
+        error={nowPlaying.error}
+      />
 
       <MediaRow
         title="Trending Now"

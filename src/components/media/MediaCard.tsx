@@ -21,9 +21,10 @@ const MediaCard = ({ media }: MediaCardProps) => {
   const releaseYear = date ? new Date(date).getFullYear() : null;
 
   const posterUrl = getTMDBImageUrl(media.poster_path, "w500");
+  const mediaPath = isMovie(media) ? "movies" : "tv-shows";
 
   return (
-    <Link to={`/movies/${media.id}`} className="block">
+    <Link to={`/${mediaPath}/${media.id}`} className="block">
       <article className="group w-full min-w-0">
         <div className="relative aspect-2/3 overflow-hidden rounded-xl bg-zinc-900">
           {posterUrl ? (
