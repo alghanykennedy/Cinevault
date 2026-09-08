@@ -9,34 +9,53 @@ export const getTrendingMovies = async (): Promise<TMDBResponse<Movie>> => {
   return response.data;
 };
 
-
-export const getPopularMovies = async (): Promise<TMDBResponse<Movie>> => {
+export const getPopularMovies = async (
+  page = 1
+): Promise<TMDBResponse<Movie>> => {
   const response = await tmdbClient.get<TMDBResponse<Movie>>(
-    "/movie/popular"
+    "/movie/popular",
+    {
+      params: { page },
+    }
   );
 
   return response.data;
 };
 
-export const getTopRatedMovies = async (): Promise<TMDBResponse<Movie>> => {
+export const getTopRatedMovies = async (
+  page = 1
+): Promise<TMDBResponse<Movie>> => {
   const response = await tmdbClient.get<TMDBResponse<Movie>>(
-    "/movie/top_rated"
+    "/movie/top_rated",
+    {
+      params: { page },
+    }
   );
 
   return response.data;
 };
 
-export const getUpcomingMovies = async (): Promise<TMDBResponse<Movie>> => {
+export const getUpcomingMovies = async (
+  page = 1
+): Promise<TMDBResponse<Movie>> => {
   const response = await tmdbClient.get<TMDBResponse<Movie>>(
-    "/movie/upcoming"
+    "/movie/upcoming",
+    {
+      params: { page },
+    }
   );
 
   return response.data;
 };
 
-export const getNowPlayingMovies = async (): Promise<TMDBResponse<Movie>> => {
+export const getNowPlayingMovies = async (
+  page = 1
+): Promise<TMDBResponse<Movie>> => {
   const response = await tmdbClient.get<TMDBResponse<Movie>>(
-    "/movie/now_playing"
+    "/movie/now_playing",
+    {
+      params: { page },
+    }
   );
 
   return response.data;
