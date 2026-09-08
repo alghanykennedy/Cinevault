@@ -48,7 +48,7 @@ npm install
 Create a local `.env` file in the project root. Do not commit this file or expose the token in documentation.
 
 ```env
-VITE_TMDB_ACCESS_TOKEN=your_tmdb_api_read_access_token
+TMDB_ACCESS_TOKEN=your_tmdb_api_read_access_token
 ```
 
 The application sends this value as a Bearer token from `src/services/tmdb/client.ts`. You can create an API Read Access Token from the API section of your TMDB account settings.
